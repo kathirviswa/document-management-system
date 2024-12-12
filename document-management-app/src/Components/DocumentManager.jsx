@@ -1,6 +1,7 @@
 import  { useState } from "react";
 import { PlusCircle, Trash, FileText, } from "lucide-react";
 
+
 function DocumentManager() {
   const [applications, setApplications] = useState([
     { id: "1", name: "Category 1", documents: [{ id: "1", name: "Document 1" }] },
