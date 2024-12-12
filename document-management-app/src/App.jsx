@@ -1,4 +1,4 @@
-import DocumentManager from './DocumentManager';
+import DocumentManager from './Components/DocumentManager';
 
 function App() {
   return (
