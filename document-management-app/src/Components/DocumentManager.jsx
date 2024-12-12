@@ -1,12 +1,12 @@
 import  { useState } from "react";
-import { PlusCircle, Trash, FileText, } from "lucide-react";
-
+import { PlusCircle, Trash, FileText,  } from "lucide-react";
 
 function DocumentManager() {
   const [applications, setApplications] = useState([
     { id: "1", name: "Category 1", documents: [{ id: "1", name: "Document 1" }] },
   ]);
   const [activeApplication, setActiveApplication] = useState("1");
+  
 
   const addApplication = () => {
     const newId = (applications.length + 1).toString();
