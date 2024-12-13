@@ -1,135 +1,138 @@
-import  { useState } from "react";
-import { PlusCircle, Trash, FileText,  } from "lucide-react";
+import { useState } from 'react'
+import { Plus, File, Trash } from 'lucide-react'
 
-
-function DocumentManager() {
+export default function DocumentManager() {
   const [applications, setApplications] = useState([
-    { id: "1", name: "Category 1", documents: [{ id: "1", name: "Document 1" }] },
-  ]);
-  const [activeApplication, setActiveApplication] = useState("1");
+    { id: 1, name: 'Application_1' },
   
+  ])
+
+  const [documents, setDocuments] = useState([
+    { id: 1, name: 'Document_1' },
+  
+      ])
+
+  const [activeApp, setActiveApp] = useState(1)
+  const [activeDoc, setActiveDoc] = useState(1)
 
   const addApplication = () => {
-    const newId = (applications.length + 1).toString();
-    setApplications([
-      ...applications,
-      { id: newId, name: `Category ${newId}`, documents: [] },
-    ]);
-    setActiveApplication(newId);
-  };
+    const newId = applications.length + 1
+    setApplications([...applications, { id: newId, name: `Application_${newId}` }])
+  }
+
+  const addDocument = () => {
+    const newId = documents.length + 1
+    setDocuments([...documents, { id: newId, name: `Document_${newId}` }])
+  }
 
   const deleteApplication = (id) => {
-    setApplications(applications.filter((app) => app.id !== id));
-    if (activeApplication === id) {
-      setActiveApplication(applications[0]?.id || "");
+    setApplications(applications.filter(app => app.id !== id))
+    if (activeApp === id) {
+      setActiveApp(applications[0]?.id || null)
     }
-  };
+  }
 
-  const addDocument = (applicationId) => {
-    setApplications(
-      applications.map((app) => {
-        if (app.id === applicationId) {
-          const newDocId = (app.documents.length + 1).toString();
-          return {
-            ...app,
-            documents: [...app.documents, { id: newDocId, name: `Document ${newDocId}` }],
-          };
-        }
-        return app;
-      })
-    );
-  };
-
-  const deleteDocument = (applicationId, documentId) => {
-    setApplications(
-      applications.map((app) => {
-        if (app.id === applicationId) {
-          return {
-            ...app,
-            documents: app.documents.filter((doc) => doc.id !== documentId),
-          };
-        }
-        return app;
-      })
-    );
-  };
+  const deleteDocument = (id) => {
+    setDocuments(documents.filter(doc => doc.id !== id))
+    if (activeDoc === id) {
+      setActiveDoc(documents[0]?.id || null)
+    }
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="flex flex-col lg:flex-row gap-4">
-        {/* Sidebar */}
-        <div className="w-full lg:w-1/4 bg-white shadow rounded p-4">
-          <h2 className="text-lg font-bold mb-4">Applications</h2>
-          <div className="flex flex-col gap-2">
-            {applications.map((app) => (
-              <div
-                key={app.id}
-                className={`p-2 flex justify-between items-center rounded cursor-pointer border ${
-                  activeApplication === app.id ? "bg-blue-100 border-blue-500" : "bg-white border-gray-300"
+    <div className="min-h-screen bg-white">
+      {/* Applications Navigation */}
+      <div className="border-b border-gray-200">
+        <div className="flex items-center gap-2 p-4">
+          {applications.map((app) => (
+            <div key={app.id} className="flex items-center">
+              <button
+                onClick={() => setActiveApp(app.id)}
+                className={`px-4 py-2 rounded-md flex items-center gap-2 ${
+                  activeApp === app.id
+                  ? 'bg-gray-100 text-gray-900'
+                  : 'text-gray-600 hover:bg-gray-50'
                 }`}
-                onClick={() => setActiveApplication(app.id)}
               >
-                <span>{app.name}</span>
+                <File className="h-4 w-4" />
+                {app.name}
+              </button>
+              <button
+                onClick={() => deleteApplication(app.id)}
+                className="ml-2 p-1 text-red-500 hover:text-red-700"
+              >
+                <Trash className="h-4 w-4" />
+              </button>
+            </div>
+          ))}
+          <button
+            onClick={addApplication}
+            className="px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600 flex items-center gap-2"
+          >
+            <Plus className="h-4 w-4" />
+            Add
+          </button>
+        </div>
+      </div>
+
+      <div className="flex">
+        {/* Documents Sidebar */}
+        <div className="w-64 border-r border-gray-200 p-4">
+          <div className="space-y-2">
+            {documents.map((doc) => (
+              <div key={doc.id} className="flex items-center justify-between">
                 <button
-                  className="text-red-500 hover:text-red-700"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    deleteApplication(app.id);
-                  }}
+                  onClick={() => setActiveDoc(doc.id)}
+                  className={`flex-grow text-left px-4 py-2 rounded-md flex items-center gap-2 ${
+                    activeDoc === doc.id
+                    ? 'bg-gray-100 text-gray-900'
+                    : 'text-gray-600 hover:bg-gray-50'
+                  }`}
                 >
-                  <Trash size={18} />
+                  <File className="h-4 w-4" />
+                  {doc.name}
+                </button>
+                <button
+                  onClick={() => deleteDocument(doc.id)}
+                  className="ml-2 p-1 text-red-500 hover:text-red-700"
+                >
+                  <Trash className="h-4 w-4" />
                 </button>
               </div>
             ))}
+            <button
+              onClick={addDocument}
+              className="w-full px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600 flex items-center gap-2"
+            >
+              <Plus className="h-4 w-4" />
+              Add
+            </button>
           </div>
-          <button
-            className="w-full mt-4 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600"
-            onClick={addApplication}
-          >
-            <PlusCircle size={18} className="inline mr-2" /> Add Application
-          </button>
         </div>
 
         {/* Main Content */}
-        <div className="w-full lg:w-3/4 bg-white shadow rounded p-4">
-          <h2 className="text-lg font-bold mb-4">
-            {applications.find((app) => app.id === activeApplication)?.name || "Select an Application"}
-          </h2>
-          {activeApplication && (
-            <div>
-              <div className="flex flex-col gap-2">
-                {applications
-                  .find((app) => app.id === activeApplication)
-                  ?.documents.map((doc) => (
-                    <div
-                      key={doc.id}
-                      className="p-2 flex justify-between items-center rounded border border-gray-300"
-                    >
-                      <div className="flex items-center gap-2">
-                        <FileText size={18} />
-                        <span>{doc.name}</span>
-                      </div>
-                      <button
-                        className="text-red-500 hover:text-red-700"
-                        onClick={() => deleteDocument(activeApplication, doc.id)}
-                      >
-                        <Trash size={18} />
-                      </button>
-                    </div>
-                  ))}
+        <div className="flex-1 p-8">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-lg font-medium text-gray-900 mb-4">
+              Upload File for Application_{activeApp} - Document_{activeDoc}
+            </h2>
+            <div className="mt-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Choose file
+              </label>
+              
+              <div className="mt-1 flex items-center">
+              <input type="file" className="block w-full text-sm text-gray file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0
+                file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700
+                hover:file:bg-gray-200
+                  "
+                />
               </div>
-              <button
-                className="mt-4 py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600"
-                onClick={() => addDocument(activeApplication)}
-              >
-                <PlusCircle size={18} className="inline mr-2" /> Add Document
-              </button>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default DocumentManager;
