@@ -141,12 +141,10 @@ export default function DocumentManager() {
               </label>
               
               <div className="mt-1 flex items-center">
-                <input
-                  type="file"
+                <input type="file"
                   className="block w-full text-sm text-gray file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0
                   file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700
-                  hover:file:bg-gray-200"
-                />
+                  hover:file:bg-gray-200" />
               </div>
             </div>
 
@@ -156,20 +154,17 @@ export default function DocumentManager() {
                 disabled={activeDocIndex === 0}
                 className={`px-4 py-2 rounded-md flex items-center gap-2 text-white ${
                   activeDocIndex === 0 ? 'bg-black' : 'bg-green-500 hover:bg-green-600'
-                }`}
-              >
+                }`} >
                 <ChevronLeft className="h-4 w-4" />
                 Previous
               </button>
-              <button
-                onClick={goToNextDocument}
+
+              <button onClick={goToNextDocument}
                 disabled={activeDocIndex === documents.length - 1}
                 className={`px-4 py-2 rounded-md flex items-center gap-2 text-white ${
                   activeDocIndex === documents.length - 1
-                    ? 'bg-black'
-                    : 'bg-green-500 hover:bg-green-600'
-                }`}
-              >
+                    ? 'bg-black' : 'bg-green-500 hover:bg-green-600'
+                }`} >
                 Next
                 <ChevronRight className="h-4 w-4" />
               </button>
