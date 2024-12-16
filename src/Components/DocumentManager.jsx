@@ -122,8 +122,7 @@ export default function DocumentManager() {
               </div>
             ))}
             <button onClick={addDocument}
-              className="w-full px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600 flex items-center gap-2"
-            >
+              className="w-full px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600 flex items-center gap-2">
               <Plus className="h-4 w-4" />
               Add
             </button>
@@ -151,10 +150,9 @@ export default function DocumentManager() {
               </div>
             </div>
 
-            {/* Navigation Buttons */}
+          {/* Navigation Buttons */}
             <div className="mt-6 flex justify-between">
-              <button
-                onClick={goToPreviousDocument}
+              <button onClick={goToPreviousDocument}
                 disabled={activeDocIndex === 0}
                 className={`px-4 py-2 rounded-md flex items-center gap-2 text-white ${
                   activeDocIndex === 0 ? 'bg-black' : 'bg-green-500 hover:bg-green-600'
