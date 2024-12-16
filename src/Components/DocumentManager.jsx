@@ -121,8 +121,7 @@ export default function DocumentManager() {
                 </button>
               </div>
             ))}
-            <button
-              onClick={addDocument}
+            <button onClick={addDocument}
               className="w-full px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600 flex items-center gap-2"
             >
               <Plus className="h-4 w-4" />
